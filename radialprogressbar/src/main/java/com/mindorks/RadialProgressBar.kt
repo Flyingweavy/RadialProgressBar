@@ -3,17 +3,16 @@ package com.mindorks
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import android.graphics.Shader
-import android.graphics.LinearGradient
 import android.util.Log
 import kotlin.collections.ArrayList
+import android.R.attr.y
+import android.R.attr.x
+import android.R.attr.y
+import android.R.attr.x
+import android.graphics.*
 
 
 /**
@@ -113,6 +112,14 @@ class RadialProgressBar : View {
                 drawOuterProgressView(canvas)
             }
         }
+
+        val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        tPaint.style = Paint.Style.FILL_AND_STROKE
+        tPaint.color = Color.BLACK
+        tPaint.textSize = 50F
+        tPaint.textAlign = Paint.Align.CENTER
+        canvas?.drawText(mInnerProgress.toString(), mViewWidth/2f, mViewHeight/2f - ((tPaint.descent() + tPaint.ascent()) / 2f), tPaint)
+
     }
 
 
@@ -267,6 +274,16 @@ class RadialProgressBar : View {
         canvas?.drawArc(
             oval, mStartAngleCenterView.toFloat(), mSweepAngleCenterView.toFloat(), false, mPaintCenterView
         )
+
+            val p = Path()
+            val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+            tPaint.style = Paint.Style.FILL_AND_STROKE
+            tPaint.color = Color.BLACK
+            tPaint.textSize = 50F
+
+            p.arcTo(oval,270f,mSweepAngleCenterView.toFloat(),true)
+            canvas?.drawTextOnPath("your %complete", p, 0f, 10f, tPaint)
+
 
     }
 
