@@ -8,10 +8,6 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.util.Log
 import kotlin.collections.ArrayList
-import android.R.attr.y
-import android.R.attr.x
-import android.R.attr.y
-import android.R.attr.x
 import android.graphics.*
 
 
@@ -52,6 +48,11 @@ class RadialProgressBar : View {
     private var hasOneProgressView = false
     private var hasTwoProgressView = false
 
+    private var showPerInner = false
+    private var showPerOuter = false
+    private var showPerCenter = false
+
+
     /**
      * Data of the Outer View
      */
@@ -78,7 +79,7 @@ class RadialProgressBar : View {
     private var mEmptyProgressColorCenterView = Color.parseColor("#F5F5F5")
     private var mCenterColor = ArrayList<Int>()
 
-
+    private val mMiddleProgressText = Paint(Paint.ANTI_ALIAS_FLAG)
     /**
      * Data of the Inner View
      */
@@ -113,15 +114,37 @@ class RadialProgressBar : View {
             }
         }
 
-        val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        tPaint.style = Paint.Style.FILL_AND_STROKE
-        tPaint.color = Color.BLACK
-        tPaint.textSize = 50F
-        tPaint.textAlign = Paint.Align.CENTER
-        canvas?.drawText(mInnerProgress.toString(), mViewWidth/2f, mViewHeight/2f - ((tPaint.descent() + tPaint.ascent()) / 2f), tPaint)
+        when {
+            showPerInner -> displayMiddle(canvas,mInnerProgress.toString())
+            showPerOuter -> displayMiddle(canvas,mOuterProgress.toString())
+            showPerCenter -> displayMiddle(canvas,mCenterProgress.toString())
+        }
 
     }
+    private fun displayMiddle(canvas:Canvas?, s : String){
 
+        mMiddleProgressText.style = Paint.Style.FILL_AND_STROKE
+        mMiddleProgressText.color = Color.BLACK
+        mMiddleProgressText.textSize = 50F
+        mMiddleProgressText.textAlign = Paint.Align.CENTER
+        canvas?.drawText(s, mViewWidth/2f, mViewHeight/2f - ((mMiddleProgressText.descent() + mMiddleProgressText.ascent()) / 2f), mMiddleProgressText)
+    }
+
+    private fun usePerInner(){
+        showPerInner = true
+        showPerCenter = false
+        showPerOuter = false
+    }
+    private fun usePerCenter(){
+        showPerInner = false
+        showPerCenter = true
+        showPerOuter = false
+    }
+    private fun usePerOuter(){
+        showPerInner = false
+        showPerCenter = false
+        showPerOuter = true
+    }
 
     /**
      * @parseAttributes parses all XML Styleables and sets them to the functions
