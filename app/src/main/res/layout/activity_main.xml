@@ -6,7 +6,6 @@
         android:background="#fff"
         tools:context=".MainActivity">
 
-
     <com.mindorks.RadialProgressBar
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -14,12 +13,19 @@
             app:useRoundedCorner="true"
             app:innerMaxProgress="100"
             app:outerMaxProgress="100"
-            app:centerMaxProgress="100"
             app:hasEmptyProgressBar="false"
             android:layout_centerInParent="true"
             app:isAnimationOn="true"
-            app:hasTwoProgressView="false"
+            app:hasTwoProgressView="true"
             app:hasOneProgressView="false"
     />
+    <TextView
+            android:id="@+id/txtvStatusCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/progress"
+            android:layout_centerHorizontal="true"
+            android:text="@string/preparing"
+            android:textSize="18sp" android:layout_marginBottom="-109dp"/>
 
 </RelativeLayout>
