@@ -130,17 +130,17 @@ class RadialProgressBar : View {
         canvas?.drawText(s, mViewWidth/2f, mViewHeight/2f - ((mMiddleProgressText.descent() + mMiddleProgressText.ascent()) / 2f), mMiddleProgressText)
     }
 
-    private fun usePerInner(){
+    public fun usePerInner(){
         showPerInner = true
         showPerCenter = false
         showPerOuter = false
     }
-    private fun usePerCenter(){
+    public fun usePerCenter(){
         showPerInner = false
         showPerCenter = true
         showPerOuter = false
     }
-    private fun usePerOuter(){
+    public fun usePerOuter(){
         showPerInner = false
         showPerCenter = false
         showPerOuter = true
