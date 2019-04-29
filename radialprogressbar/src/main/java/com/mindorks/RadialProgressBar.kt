@@ -10,6 +10,8 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.LinearLayout
+import android.widget.TextView
 
 /**
  * @author Himanshu Singh
@@ -91,6 +93,7 @@ class RadialProgressBar : View {
      */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
         initMeasurements()
         when {
             hasTwoProgressView -> {
@@ -105,7 +108,14 @@ class RadialProgressBar : View {
                 drawCenterProgressView(canvas)
                 drawOuterProgressView(canvas)
             }
+
         }
+        val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        tPaint.style = Paint.Style.FILL_AND_STROKE
+        tPaint.color = Color.BLACK
+        tPaint.textSize = (Math.min(mViewWidth, mViewHeight)/10).toFloat()
+        tPaint.textAlign = Paint.Align.CENTER
+        canvas?.drawText(mOuterProgress.toString(), mViewWidth/2f, mViewHeight/2f - ((tPaint.descent() + tPaint.ascent()) / 2f), tPaint)
     }
 
 
@@ -161,6 +171,7 @@ class RadialProgressBar : View {
         setStartAngleCenterView(mStartAngleCenterView)
         setStartAngleInnerView(mStartAngleInnerView)
         setStartAngleOuterView(mStartAngleOuterView)
+      //  TextPrgressView(mOuterProgress)
 
     }
 
@@ -546,7 +557,13 @@ class RadialProgressBar : View {
                 setOuterProgress(outerProgress)
             }
         }
+
+
+
+
+
         invalidate()
+
     }
 
     /**
@@ -649,5 +666,7 @@ class RadialProgressBar : View {
         hasTwoProgressView = value
         invalidate()
     }
+  
+
 
 }
