@@ -760,6 +760,4 @@ class RadialProgressBar : View {
         invalidate()
     }
 
-    
-    
 }
