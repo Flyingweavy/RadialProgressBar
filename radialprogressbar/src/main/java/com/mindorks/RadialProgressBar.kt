@@ -759,5 +759,7 @@ class RadialProgressBar : View {
         hasTwoProgressView = value
         invalidate()
     }
-
+    
+    
+    
 }
