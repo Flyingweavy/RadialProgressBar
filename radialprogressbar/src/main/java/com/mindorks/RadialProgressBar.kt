@@ -3,23 +3,14 @@ package com.mindorks
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-<<<<<<< HEAD
 import android.widget.LinearLayout
 import android.widget.TextView
-=======
-import android.graphics.Shader
-import android.graphics.LinearGradient
 import android.util.Log
 import kotlin.collections.ArrayList
-
->>>>>>> 78f2352782ec2b66d9462077ab518b3f1e45b324
+import android.graphics.*
 
 /**
  * @author Himanshu Singh
@@ -58,6 +49,11 @@ class RadialProgressBar : View {
     private var hasOneProgressView = false
     private var hasTwoProgressView = false
 
+    private var showPerInner = false
+    private var showPerOuter = false
+    private var showPerCenter = false
+
+
     /**
      * Data of the Outer View
      */
@@ -84,7 +80,7 @@ class RadialProgressBar : View {
     private var mEmptyProgressColorCenterView = Color.parseColor("#F5F5F5")
     private var mCenterColor = ArrayList<Int>()
 
-
+    private val mMiddleProgressText = Paint(Paint.ANTI_ALIAS_FLAG)
     /**
      * Data of the Inner View
      */
@@ -120,14 +116,38 @@ class RadialProgressBar : View {
             }
 
         }
-        val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        tPaint.style = Paint.Style.FILL_AND_STROKE
-        tPaint.color = Color.BLACK
-        tPaint.textSize = (Math.min(mViewWidth, mViewHeight)/10).toFloat()
-        tPaint.textAlign = Paint.Align.CENTER
-        canvas?.drawText(mOuterProgress.toString(), mViewWidth/2f, mViewHeight/2f - ((tPaint.descent() + tPaint.ascent()) / 2f), tPaint)
-    }
 
+        when {
+            showPerInner -> displayMiddle(canvas,mInnerProgress.toString())
+            showPerOuter -> displayMiddle(canvas,mOuterProgress.toString())
+            showPerCenter -> displayMiddle(canvas,mCenterProgress.toString())
+        }
+
+    }
+    private fun displayMiddle(canvas:Canvas?, s : String){
+
+        mMiddleProgressText.style = Paint.Style.FILL_AND_STROKE
+        mMiddleProgressText.color = Color.BLACK
+        mMiddleProgressText.textSize = 50F
+        mMiddleProgressText.textAlign = Paint.Align.CENTER
+        canvas?.drawText(s, mViewWidth/2f, mViewHeight/2f - ((mMiddleProgressText.descent() + mMiddleProgressText.ascent()) / 2f), mMiddleProgressText)
+
+
+    public fun usePerInner(){
+        showPerInner = true
+        showPerCenter = false
+        showPerOuter = false
+    }
+    public fun usePerCenter(){
+        showPerInner = false
+        showPerCenter = true
+        showPerOuter = false
+    }
+    public fun usePerOuter(){
+        showPerInner = false
+        showPerCenter = false
+        showPerOuter = true
+    }
 
     /**
      * @parseAttributes parses all XML Styleables and sets them to the functions
@@ -281,6 +301,16 @@ class RadialProgressBar : View {
         canvas?.drawArc(
             oval, mStartAngleCenterView.toFloat(), mSweepAngleCenterView.toFloat(), false, mPaintCenterView
         )
+
+//             val p = Path()
+//             val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+//             tPaint.style = Paint.Style.FILL_AND_STROKE
+//             tPaint.color = Color.BLACK
+//             tPaint.textSize = 50F
+
+//             p.arcTo(oval,270f,mSweepAngleCenterView.toFloat(),true)
+//             canvas?.drawTextOnPath("your %complete", p, 0f, 10f, tPaint)
+
 
     }
 
@@ -739,7 +769,7 @@ class RadialProgressBar : View {
         hasTwoProgressView = value
         invalidate()
     }
-  
-
-
+    
+    
+    
 }

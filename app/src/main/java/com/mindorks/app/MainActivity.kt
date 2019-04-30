@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         centerColor.add(Color.parseColor("#3affaa"))
         centerColor.add(Color.parseColor("#1b93ff"))
         progress.setCenterProgressColor(centerColor)
+
+        progress.usePerCenter()
     }
 }
 
