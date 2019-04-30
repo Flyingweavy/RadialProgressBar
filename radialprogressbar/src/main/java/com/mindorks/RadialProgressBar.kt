@@ -10,8 +10,16 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+<<<<<<< HEAD
 import android.widget.LinearLayout
 import android.widget.TextView
+=======
+import android.graphics.Shader
+import android.graphics.LinearGradient
+import android.util.Log
+import kotlin.collections.ArrayList
+
+>>>>>>> 78f2352782ec2b66d9462077ab518b3f1e45b324
 
 /**
  * @author Himanshu Singh
@@ -62,7 +70,7 @@ class RadialProgressBar : View {
     private var mProgressColorOuterView = Color.parseColor("#f52e67")
     private var mEmptyProgressColorOuterView = Color.parseColor("#F5F5F5")
     private var mPaintOuterView = Paint(Paint.ANTI_ALIAS_FLAG)
-
+    private var mOuterColor = ArrayList<Int>()
     /**
      * Data of the Center View
      */
@@ -74,6 +82,7 @@ class RadialProgressBar : View {
     private var mProgressColorCenterView = Color.parseColor("#c2ff07")
     private var mPaintCenterView = Paint(Paint.ANTI_ALIAS_FLAG)
     private var mEmptyProgressColorCenterView = Color.parseColor("#F5F5F5")
+    private var mCenterColor = ArrayList<Int>()
 
 
     /**
@@ -87,6 +96,7 @@ class RadialProgressBar : View {
     private var mProgressColorInnerView = Color.parseColor("#0dffab")
     private var mPaintInnerView = Paint(Paint.ANTI_ALIAS_FLAG)
     private var mEmptyProgressColorInnerView = Color.parseColor("#F5F5F5")
+    private var mInnerColor = ArrayList<Int>()
 
     /**
      * @onDraw draws all the Layout on Screen
@@ -129,14 +139,14 @@ class RadialProgressBar : View {
         mProgressColorInnerView = a.getColor(R.styleable.RadialProgressBar_innerProgressColor, mProgressColorInnerView)
         mCenterProgress = a.getInteger(R.styleable.RadialProgressBar_centerProgress, mCenterProgress)
         mProgressColorCenterView =
-                a.getColor(R.styleable.RadialProgressBar_centerProgressColor, mProgressColorCenterView)
+            a.getColor(R.styleable.RadialProgressBar_centerProgressColor, mProgressColorCenterView)
         hasOneProgressView = a.getBoolean(R.styleable.RadialProgressBar_hasOneProgressView, hasOneProgressView)
         hasTwoProgressView = a.getBoolean(R.styleable.RadialProgressBar_hasTwoProgressView, hasTwoProgressView)
         mRoundedCorners = a.getBoolean(R.styleable.RadialProgressBar_useRoundedCorner, mRoundedCorners)
         isAnimationOn = a.getBoolean(R.styleable.RadialProgressBar_isAnimationOn, isAnimationOn)
         mStartAngleOuterView = a.getInteger(R.styleable.RadialProgressBar_outerProgressStartAngle, mStartAngleOuterView)
         mStartAngleCenterView =
-                a.getInteger(R.styleable.RadialProgressBar_centerProgressStartAngle, mStartAngleCenterView)
+            a.getInteger(R.styleable.RadialProgressBar_centerProgressStartAngle, mStartAngleCenterView)
         mStartAngleInnerView = a.getInteger(R.styleable.RadialProgressBar_innerProgressStartAngle, mStartAngleInnerView)
         mMaxProgressOuterView = a.getInteger(R.styleable.RadialProgressBar_outerMaxProgress, mMaxProgressOuterView)
         mMaxProgressInnerView = a.getInteger(R.styleable.RadialProgressBar_innerMaxProgress, mMaxProgressInnerView)
@@ -144,11 +154,11 @@ class RadialProgressBar : View {
         mElevation = a.getBoolean(R.styleable.RadialProgressBar_hasElevation, mElevation)
         mEmptyProgressBar = a.getBoolean(R.styleable.RadialProgressBar_hasEmptyProgressBar, mEmptyProgressBar)
         mEmptyProgressColorCenterView =
-                a.getColor(R.styleable.RadialProgressBar_centerEmptyProgressColor, mEmptyProgressColorCenterView)
+            a.getColor(R.styleable.RadialProgressBar_centerEmptyProgressColor, mEmptyProgressColorCenterView)
         mEmptyProgressColorOuterView =
-                a.getColor(R.styleable.RadialProgressBar_outerEmptyProgressColor, mEmptyProgressColorOuterView)
+            a.getColor(R.styleable.RadialProgressBar_outerEmptyProgressColor, mEmptyProgressColorOuterView)
         mEmptyProgressColorInnerView =
-                a.getColor(R.styleable.RadialProgressBar_innerEmptyProgressColor, mEmptyProgressColorInnerView)
+            a.getColor(R.styleable.RadialProgressBar_innerEmptyProgressColor, mEmptyProgressColorInnerView)
         a.recycle()
         hasElevation(mElevation)
         hasOneProgressView(hasOneProgressView)
@@ -162,11 +172,14 @@ class RadialProgressBar : View {
         setMaxProgressInnerView(mMaxProgressInnerView)
         setMaxProgressCenterView(mMaxProgressCenterView)
         setOuterProgress(mOuterProgress)
-        setOuterProgressColor(mProgressColorOuterView)
+        mOuterColor.add(mProgressColorOuterView)
+        setOuterProgressColor(mOuterColor)
         setInnerProgress(mInnerProgress)
-        setInnerProgressColor(mProgressColorInnerView)
+        mInnerColor.add(mProgressColorInnerView)
+        setInnerProgressColor(mInnerColor)
         setCenterProgress(mCenterProgress)
-        setCenterProgressColor(mProgressColorCenterView)
+        mCenterColor.add(mProgressColorCenterView)
+        setCenterProgressColor(mCenterColor)
         useRoundedCorners(mRoundedCorners)
         setStartAngleCenterView(mStartAngleCenterView)
         setStartAngleInnerView(mStartAngleInnerView)
@@ -182,10 +195,9 @@ class RadialProgressBar : View {
         val diameter = Math.min(mViewWidth, mViewHeight)
         val paddingView = (diameter / 16.0).toFloat()
         val stroke = (diameter / 8).toFloat()
-        val addVal = (stroke * 2) + 8f
-        val subVal = ((stroke * 2) + paddingView + 8f)
+        val addVal = (stroke * 2) + 20f
+        val subVal = ((stroke * 2) + paddingView + 20f)
         val oval = RectF(paddingView + addVal, paddingView + addVal, diameter - subVal, diameter - subVal)
-        mPaintInnerView.color = mProgressColorInnerView
         mPaintInnerView.strokeWidth = stroke
         mPaintInnerView.isAntiAlias = true
         mPaintInnerView.strokeCap = if (mRoundedCorners) Paint.Cap.ROUND else Paint.Cap.BUTT
@@ -198,6 +210,26 @@ class RadialProgressBar : View {
         }
         if (mEmptyProgressBar) drawProgressBackArc(mEmptyProgressColorInnerView, oval, stroke, canvas)
 
+        when {
+            mInnerColor.size == 1 -> mPaintInnerView.color = mInnerColor[0]
+            mInnerColor.size == 2 -> mPaintInnerView.shader = LinearGradient(
+                0f, 0f, 0f, height.toFloat(),
+                mInnerColor[0],
+                mInnerColor[1],
+                Shader.TileMode.MIRROR
+            )
+            mInnerColor.size > 2 -> {
+                mPaintInnerView.shader = LinearGradient(
+                    0f, 0f, 0f,
+                    height.toFloat(),
+                    mInnerColor[0],
+                    mInnerColor[1],
+                    Shader.TileMode.MIRROR
+                )
+                Log.e("RadialProgressBar", "Inner Progress Color Can't Be more then Two colors")
+            }
+            mInnerColor.size == 0 -> mPaintInnerView.color = mProgressColorInnerView
+        }
         canvas?.drawArc(
             oval, mStartAngleInnerView.toFloat(), mSweepAngleInnerView.toFloat(), false, mPaintInnerView
         )
@@ -211,10 +243,9 @@ class RadialProgressBar : View {
         val diameter = Math.min(mViewWidth, mViewHeight)
         val paddingView = (diameter / 16.0).toFloat()
         val stroke = (diameter / 8).toFloat()
-        val addVal = stroke + 4f
-        val subVal = (stroke + paddingView + 4f)
+        val addVal = stroke + 10f
+        val subVal = (stroke + paddingView + 10f)
         val oval = RectF(paddingView + addVal, paddingView + addVal, diameter - subVal, diameter - subVal)
-        mPaintCenterView.color = mProgressColorCenterView
         mPaintCenterView.strokeWidth = stroke
         mPaintCenterView.isAntiAlias = true
         mPaintCenterView.strokeCap = if (mRoundedCorners) Paint.Cap.ROUND else Paint.Cap.BUTT
@@ -226,6 +257,27 @@ class RadialProgressBar : View {
             )
         }
         if (mEmptyProgressBar) drawProgressBackArc(mEmptyProgressColorCenterView, oval, stroke, canvas)
+        when {
+            mCenterColor.size == 1 -> mPaintCenterView.color = mCenterColor[0]
+            mCenterColor.size == 2 -> mPaintCenterView.shader = LinearGradient(
+                0f, 0f, 0f,
+                height.toFloat(),
+                mCenterColor[0],
+                mCenterColor[1],
+                Shader.TileMode.MIRROR
+            )
+            mCenterColor.size > 2 -> {
+                mPaintCenterView.shader = LinearGradient(
+                    0f, 0f, 0f,
+                    height.toFloat(),
+                    mCenterColor[0],
+                    mCenterColor[1],
+                    Shader.TileMode.MIRROR
+                )
+                Log.e("RadialProgressBar", "Center Progress Color Can't Be more then Two colors")
+            }
+            mCenterColor.size == 0 -> mPaintCenterView.color = mProgressColorCenterView
+        }
         canvas?.drawArc(
             oval, mStartAngleCenterView.toFloat(), mSweepAngleCenterView.toFloat(), false, mPaintCenterView
         )
@@ -240,8 +292,8 @@ class RadialProgressBar : View {
         val paddingView = (diameter / 16.0).toFloat()
         val stroke = (diameter / 8).toFloat()
         val oval = RectF(paddingView, paddingView, diameter - paddingView, diameter - paddingView)
-        mPaintOuterView.color = mProgressColorOuterView
         mPaintOuterView.strokeWidth = stroke
+
         mPaintOuterView.isAntiAlias = true
         mPaintOuterView.strokeCap = if (mRoundedCorners) Paint.Cap.ROUND else Paint.Cap.BUTT
         mPaintOuterView.style = Paint.Style.STROKE
@@ -252,6 +304,27 @@ class RadialProgressBar : View {
             )
         }
         if (mEmptyProgressBar) drawProgressBackArc(mEmptyProgressColorOuterView, oval, stroke, canvas)
+        when {
+            mOuterColor.size == 1 -> mPaintOuterView.color = mOuterColor[0]
+            mOuterColor.size == 2 -> mPaintOuterView.shader = LinearGradient(
+                0f, 0f, 0f,
+                height.toFloat(),
+                mOuterColor[0],
+                mOuterColor[1],
+                Shader.TileMode.MIRROR
+            )
+            mOuterColor.size > 2 -> {
+                mPaintOuterView.shader = LinearGradient(
+                    0f, 0f, 0f,
+                    height.toFloat(),
+                    mOuterColor[0],
+                    mOuterColor[1],
+                    Shader.TileMode.MIRROR
+                )
+                Log.e("RadialProgressBar", "Outer Progress Color Can't Be more then Two colors")
+            }
+            mOuterColor.size == 0 -> mPaintOuterView.color = mProgressColorOuterView
+        }
         canvas?.drawArc(
             oval, mStartAngleOuterView.toFloat(), mSweepAngleOuterView.toFloat(), false, mPaintOuterView
         )
@@ -498,8 +571,8 @@ class RadialProgressBar : View {
     /**
      * Set Color for Outer ProgressView
      */
-    fun setOuterProgressColor(color: Int) {
-        mProgressColorOuterView = color
+    fun setOuterProgressColor(color: ArrayList<Int>) {
+        mOuterColor = color
         invalidate()
     }
 
@@ -611,9 +684,9 @@ class RadialProgressBar : View {
     /**
     set the progress color for center progressview
      */
-    fun setInnerProgressColor(color: Int) {
+    fun setInnerProgressColor(color: ArrayList<Int>) {
         if (!(hasOneProgressView && hasTwoProgressView)) {
-            mProgressColorInnerView = color
+            mInnerColor = color
             invalidate()
         }
     }
@@ -644,9 +717,9 @@ class RadialProgressBar : View {
     /**
     set the color for center progressview
      */
-    fun setCenterProgressColor(color: Int) {
+    fun setCenterProgressColor(color: ArrayList<Int>) {
         if (!(hasOneProgressView && !hasTwoProgressView)) {
-            mProgressColorCenterView = color
+            mCenterColor = color
             invalidate()
         }
     }

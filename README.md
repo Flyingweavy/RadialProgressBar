@@ -5,7 +5,9 @@
 Radial ProgressBar inspired  by Apple Watch OS. It is highly Customisable <br/>
 ### Preview of Radial Progress Bar
 
-![](https://github.com/MindorksOpenSource/RadialProgressBar/blob/master/images/slow.gif)
+ <img src="https://github.com/MindorksOpenSource/RadialProgressBar/blob/master/images/slow.gif" width ="300" height ="300"/>
+<img src="https://images-na.ssl-images-amazon.com/images/I/51FRMHVcPcL._SX425_.jpg"  width ="200" height ="200"/>
+
 
 
 [![Mindorks](https://img.shields.io/badge/mindorks-opensource-blue.svg)](https://mindorks.com/open-source-projects)
@@ -28,7 +30,7 @@ allprojects {
 ##### Step 2. Add the dependency
 ```
 dependencies {
-	        implementation 'com.github.MindorksOpenSource:RadialProgressBar:v1.1'
+	        implementation 'com.github.MindorksOpenSource:RadialProgressBar:v1.2'
 	}
 ```
 
@@ -80,9 +82,9 @@ thats it and how you can use the RadialProgressView in your project.
 |Set OuterProgress|app:outerProgress="Integer"|rpb.setOuterProgress(Integer)|0|
 |Set CenterProgress|app:centerProgress="Integer"|rpb.setCenterProgress(Integer)|0|
 |Set InnerProgress|app:innerProgress="Integer"|rpb.setInnerProgress(Integer)|0|
-|Set OuterProgressColor|app:outerProgressColor="color"|rpb.setOuterProgressColor(color)|#f52e67|
-|Set CenterProgressColor|app:centerProgressColor="color"|rpb.setCenterProgressColor(color)|#c2ff07|
-|Set InnerProgressColor|app:innerProgressColor="color"|rpb.setInnerProgressColor(color)|#0dffab|
+|Set OuterProgressColor|app:outerProgressColor="color"|rpb.setOuterProgressColor(listOfColor)|#f52e67|
+|Set CenterProgressColor|app:centerProgressColor="color"|rpb.setCenterProgressColor(listOfColor)|#c2ff07|
+|Set InnerProgressColor|app:innerProgressColor="color"|rpb.setInnerProgressColor(listOfColor)|#0dffab|
 |Set Elevation|app:hasElevation="true/false"|rpb.hasElevation(true/false)|false|
 |Set EmptyProgressBar|app:hasEmptyProgressBar="true/false"|rpb.hasEmptyProgressBar(true/false)|false|
 |Set Animation|app:isAnimationOn="true/false"|rpb.setAnimationInProgressView(true/false)|true|
@@ -109,6 +111,16 @@ You can also get value related to the RadialProgressView,
 |Get Start Angle InnerProgress|rpb.getMaxProgressInnerView()|
 |Get Start Angle CenterProgress|rpb.getMaxProgressCenterView()|
 
+###
+For Gradient Shade,
+```
+ val outerColor = ArrayList<Int>()
+        outerColor.add(Color.parseColor("#fbab00"))
+        outerColor.add(Color.parseColor("#f5004b"))
+        progress.setOuterProgressColor(outerColor)
+        
+```
+
 ### Todo
     - If using One progressbar, user can also have an option to display the value in text
     
@@ -116,6 +128,7 @@ You can also get value related to the RadialProgressView,
 ## If this library helps you in anyway, show your love :heart: by putting a :star: on this project :v:
 
 [Check out Mindorks awesome open source projects here](https://mindorks.com/open-source-projects)
+
 
 Contributor
  * [Himanshu Singh](https://github.com/hi-manshu)

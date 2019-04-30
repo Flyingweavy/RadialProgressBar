@@ -7,15 +7,15 @@
         tools:context=".MainActivity">
 
     <com.mindorks.RadialProgressBar
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:id="@+id/progress"
-            app:useRoundedCorner="true"
             app:innerMaxProgress="100"
             app:outerMaxProgress="100"
             app:hasEmptyProgressBar="false"
             android:layout_centerInParent="true"
             app:isAnimationOn="true"
+<<<<<<< HEAD
             app:hasTwoProgressView="true"
             app:hasOneProgressView="false"
     />
@@ -27,5 +27,9 @@
             android:layout_centerHorizontal="true"
             android:text="@string/preparing"
             android:textSize="18sp" android:layout_marginBottom="-109dp"/>
+=======
+            app:hasTwoProgressView="false"
+            app:hasOneProgressView="false"/>
+>>>>>>> 78f2352782ec2b66d9462077ab518b3f1e45b324
 
 </RelativeLayout>
