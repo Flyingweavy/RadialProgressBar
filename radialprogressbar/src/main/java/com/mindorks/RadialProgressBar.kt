@@ -298,14 +298,14 @@ class RadialProgressBar : View {
             oval, mStartAngleCenterView.toFloat(), mSweepAngleCenterView.toFloat(), false, mPaintCenterView
         )
 
-            val p = Path()
-            val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-            tPaint.style = Paint.Style.FILL_AND_STROKE
-            tPaint.color = Color.BLACK
-            tPaint.textSize = 50F
+//             val p = Path()
+//             val tPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+//             tPaint.style = Paint.Style.FILL_AND_STROKE
+//             tPaint.color = Color.BLACK
+//             tPaint.textSize = 50F
 
-            p.arcTo(oval,270f,mSweepAngleCenterView.toFloat(),true)
-            canvas?.drawTextOnPath("your %complete", p, 0f, 10f, tPaint)
+//             p.arcTo(oval,270f,mSweepAngleCenterView.toFloat(),true)
+//             canvas?.drawTextOnPath("your %complete", p, 0f, 10f, tPaint)
 
 
     }
