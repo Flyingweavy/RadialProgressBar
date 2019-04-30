@@ -6,10 +6,11 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.util.Log
 import kotlin.collections.ArrayList
 import android.graphics.*
-
 
 /**
  * @author Himanshu Singh
@@ -98,6 +99,7 @@ class RadialProgressBar : View {
      */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
         initMeasurements()
         when {
             hasTwoProgressView -> {
@@ -112,6 +114,7 @@ class RadialProgressBar : View {
                 drawCenterProgressView(canvas)
                 drawOuterProgressView(canvas)
             }
+
         }
 
         when {
@@ -128,7 +131,7 @@ class RadialProgressBar : View {
         mMiddleProgressText.textSize = 50F
         mMiddleProgressText.textAlign = Paint.Align.CENTER
         canvas?.drawText(s, mViewWidth/2f, mViewHeight/2f - ((mMiddleProgressText.descent() + mMiddleProgressText.ascent()) / 2f), mMiddleProgressText)
-    }
+
 
     public fun usePerInner(){
         showPerInner = true
@@ -201,6 +204,7 @@ class RadialProgressBar : View {
         setStartAngleCenterView(mStartAngleCenterView)
         setStartAngleInnerView(mStartAngleInnerView)
         setStartAngleOuterView(mStartAngleOuterView)
+      //  TextPrgressView(mOuterProgress)
 
     }
 
@@ -656,7 +660,13 @@ class RadialProgressBar : View {
                 setOuterProgress(outerProgress)
             }
         }
+
+
+
+
+
         invalidate()
+
     }
 
     /**

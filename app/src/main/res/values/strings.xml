@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">app</string>
+<<<<<<< HEAD
+    <string name="progress_stats">Progress stats</string>
+    <string name="preparing">Preparing...</string>
+=======
+>>>>>>> 4571cde8f7e5c8fd33d99b6a34ec35ab8818ac1c
 </resources>
