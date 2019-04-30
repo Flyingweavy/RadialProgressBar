@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">app</string>
+    <string name="progress_stats">Progress stats</string>
+    <string name="preparing">Preparing...</string>
+</resources>
